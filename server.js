@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 // Static data - Stock recommendations based on investment amount ranges
 const stockRecommendations = {
   beginner: {
-    range: { min: 0, max: 100000 },
+    range: { min: 0, max: 10000 },
     stocks: [
       { symbol: "HDFCBANK", name: "HDFC Bank Ltd.", risk: "Low", price: 1580 },
       {
@@ -63,25 +63,25 @@ const stockRecommendations = {
     ],
   },
   intermediate: {
-    range: { min: 100001, max: 1000000 },
+    range: { min: 10000, max: 1000000 },
     stocks: [
       {
         symbol: "ASIANPAINT",
         name: "Asian Paints Ltd.",
         risk: "Medium",
-        price: 3120,
+        price: 31200,
       },
       {
         symbol: "AXISBANK",
         name: "Axis Bank Ltd.",
         risk: "Medium",
-        price: 1050,
+        price: 10500,
       },
       {
         symbol: "BAJFINANCE",
         name: "Bajaj Finance Ltd.",
         risk: "Medium",
-        price: 6930,
+        price: 69300,
       },
       {
         symbol: "MARUTI",
@@ -93,19 +93,19 @@ const stockRecommendations = {
         symbol: "HCLTECH",
         name: "HCL Technologies Ltd.",
         risk: "Medium",
-        price: 1350,
+        price: 13500,
       },
       {
         symbol: "SUNPHARMA",
         name: "Sun Pharmaceutical Industries Ltd.",
         risk: "Medium",
-        price: 1270,
+        price: 12700,
       },
       {
         symbol: "TATAMOTORS",
         name: "Tata Motors Ltd.",
         risk: "Medium-High",
-        price: 760,
+        price: 76000,
       },
       {
         symbol: "NESTLEIND",
@@ -117,20 +117,20 @@ const stockRecommendations = {
         symbol: "ULTRACEMCO",
         name: "UltraTech Cement Ltd.",
         risk: "Medium",
-        price: 9430,
+        price: 94300,
       },
       {
         symbol: "POWERGRID",
         name: "Power Grid Corporation of India Ltd.",
         risk: "Medium",
-        price: 270,
+        price: 27000,
       },
       { symbol: "WIPRO", name: "Wipro Ltd.", risk: "Medium", price: 470 },
       {
         symbol: "TATASTEEL",
         name: "Tata Steel Ltd.",
         risk: "Medium-High",
-        price: 135,
+        price: 13500,
       },
     ],
   },
