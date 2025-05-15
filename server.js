@@ -3,6 +3,16 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const cors = require("cors");
+
+// Enable CORS
+app.use(
+  cors({
+    origin: "*", // Replace with your frontend URL (e.g., Vercel deployment)
+    methods: ["GET", "POST"],
+    credentials: true, // If you're using cookies/auth headers
+  })
+);
 
 app.use(bodyParser.json());
 
