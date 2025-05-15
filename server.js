@@ -330,10 +330,11 @@ app.post("/api/stock-recommendations", (req, res) => {
 });
 
 // Loan evaluation endpoint
+
+// Loan evaluation endpoint
 app.post("/api/loan-evaluation", (req, res) => {
   const { amount, income, loanAmount, creditScore, loanTerm } = req.body;
 
-  // Validate required inputs
   if (!amount || isNaN(amount) || amount <= 0) {
     return res.status(400).json({
       error: "Please provide a valid investment amount greater than 0",
@@ -346,10 +347,8 @@ app.post("/api/loan-evaluation", (req, res) => {
     });
   }
 
-  // Calculate loan-to-income ratio
   const loanToIncome = income ? (loanAmount / income).toFixed(2) : "Unknown";
 
-  // Simple loan evaluation
   let loanEvaluation = "Moderate risk";
   let interestRate = 7.5;
 
@@ -366,7 +365,6 @@ app.post("/api/loan-evaluation", (req, res) => {
     }
   }
 
-  // Calculate monthly payment if loan term is provided
   let monthlyPayment = null;
   if (loanTerm && !isNaN(loanTerm) && loanTerm > 0) {
     const monthlyRate = interestRate / 100 / 12;
@@ -375,12 +373,11 @@ app.post("/api/loan-evaluation", (req, res) => {
       (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -payments));
   }
 
-  // Get stock recommendations to invest remaining amount
-  const remainingAmount = amount;
-  const category = getInvestmentCategory(remainingAmount);
-  const recommendedStocks = stockRecommendations[category].stocks;
+  const investmentLevel = getInvestmentCategory(amount);
+  const recommendedStocks =
+    stockRecommendations[investmentLevel].categories["moderate"];
   const purchasableStocks = calculatePurchasableShares(
-    remainingAmount,
+    amount,
     recommendedStocks
   );
 
@@ -393,8 +390,9 @@ app.post("/api/loan-evaluation", (req, res) => {
     monthlyPayment: monthlyPayment
       ? `₹${monthlyPayment.toFixed(2).toLocaleString("en-IN")}`
       : "Unknown",
-    investmentAmount: `₹${remainingAmount.toLocaleString("en-IN")}`,
-    category,
+    investmentAmount: `₹${amount.toLocaleString("en-IN")}`,
+    investmentLevel,
+    riskCategory: "moderate",
     recommendations: purchasableStocks.map((stock) => ({
       ...stock,
       price: `₹${stock.price.toLocaleString("en-IN")}`,
@@ -404,12 +402,16 @@ app.post("/api/loan-evaluation", (req, res) => {
 });
 
 // Get all available stocks
+// Get all available stocks
 app.get("/api/all-stocks", (req, res) => {
-  const allStocks = Object.values(stockRecommendations).flatMap(
-    (category) => category.stocks
-  );
+  const allStocks = [];
 
-  // Remove duplicates based on symbol
+  Object.values(stockRecommendations).forEach((level) => {
+    Object.values(level.categories).forEach((stocksArray) => {
+      allStocks.push(...stocksArray);
+    });
+  });
+
   const uniqueStocks = allStocks.filter(
     (stock, index, self) =>
       index === self.findIndex((s) => s.symbol === stock.symbol)
