@@ -3,283 +3,254 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
-app.use(
-  cors({
-    origin: "*", // or specify your frontend URL e.g., 'https://your-frontend.com'
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
 
-// Middleware
 app.use(bodyParser.json());
 
-// Static data - Stock recommendations based on investment amount ranges
 const stockRecommendations = {
   beginner: {
-    range: { min: 0, max: 10000 },
-    stocks: [
-      { symbol: "HDFCBANK", name: "HDFC Bank Ltd.", risk: "Low", price: 1580 },
-      {
-        symbol: "RELIANCE",
-        name: "Reliance Industries Ltd.",
-        risk: "Low",
-        price: 2450,
-      },
-      {
-        symbol: "TCS",
-        name: "Tata Consultancy Services Ltd.",
-        risk: "Low",
-        price: 3670,
-      },
-      { symbol: "INFY", name: "Infosys Ltd.", risk: "Low", price: 1480 },
-      { symbol: "ICICIBANK", name: "ICICI Bank Ltd.", risk: "Low", price: 985 },
-      {
-        symbol: "KOTAKBANK",
-        name: "Kotak Mahindra Bank Ltd.",
-        risk: "Low",
-        price: 1790,
-      },
-      {
-        symbol: "HINDUNILVR",
-        name: "Hindustan Unilever Ltd.",
-        risk: "Low",
-        price: 2570,
-      },
-      {
-        symbol: "SBIN",
-        name: "State Bank of India",
-        risk: "Low-Medium",
-        price: 740,
-      },
-      {
-        symbol: "BHARTIARTL",
-        name: "Bharti Airtel Ltd.",
-        risk: "Low-Medium",
-        price: 920,
-      },
-      { symbol: "ITC", name: "ITC Ltd.", risk: "Low", price: 430 },
-    ],
+    range: { min: 1000, max: 10000 },
+    categories: {
+      conservative: [
+        {
+          symbol: "SBIN",
+          name: "State Bank of India",
+          risk: "Low",
+          price: 807,
+        },
+        {
+          symbol: "IndusindBK",
+          name: "Indusid Bank",
+          risk: "Low",
+          price: 780,
+        },
+      ],
+      moderate: [
+        {
+          symbol: "WIPRO",
+          name: "WIPRO",
+          risk: "Medium",
+          price: 256,
+        },
+        {
+          symbol: "SPY",
+          name: "SPDR S&P 500 ETF",
+          risk: "Medium",
+          price: 345,
+        },
+      ],
+      aggressive: [
+        {
+          symbol: "RSHIN",
+          name: "Rasar Shin",
+          risk: "High",
+          price: 127,
+        },
+        {
+          symbol: "BHEL",
+          name: "BHARAT ELECTRONICS",
+          risk: "High",
+          price: 245,
+        },
+      ],
+    },
   },
   intermediate: {
-    range: { min: 10000, max: 1000000 },
-    stocks: [
-      {
-        symbol: "ASIANPAINT",
-        name: "Asian Paints Ltd.",
-        risk: "Medium",
-        price: 31200,
-      },
-      {
-        symbol: "AXISBANK",
-        name: "Axis Bank Ltd.",
-        risk: "Medium",
-        price: 10500,
-      },
-      {
-        symbol: "BAJFINANCE",
-        name: "Bajaj Finance Ltd.",
-        risk: "Medium",
-        price: 69300,
-      },
-      {
-        symbol: "MARUTI",
-        name: "Maruti Suzuki India Ltd.",
-        risk: "Medium",
-        price: 10250,
-      },
-      {
-        symbol: "HCLTECH",
-        name: "HCL Technologies Ltd.",
-        risk: "Medium",
-        price: 13500,
-      },
-      {
-        symbol: "SUNPHARMA",
-        name: "Sun Pharmaceutical Industries Ltd.",
-        risk: "Medium",
-        price: 12700,
-      },
-      {
-        symbol: "TATAMOTORS",
-        name: "Tata Motors Ltd.",
-        risk: "Medium-High",
-        price: 76000,
-      },
-      {
-        symbol: "NESTLEIND",
-        name: "Nestle India Ltd.",
-        risk: "Medium",
-        price: 22780,
-      },
-      {
-        symbol: "ULTRACEMCO",
-        name: "UltraTech Cement Ltd.",
-        risk: "Medium",
-        price: 94300,
-      },
-      {
-        symbol: "POWERGRID",
-        name: "Power Grid Corporation of India Ltd.",
-        risk: "Medium",
-        price: 27000,
-      },
-      { symbol: "WIPRO", name: "Wipro Ltd.", risk: "Medium", price: 470 },
-      {
-        symbol: "TATASTEEL",
-        name: "Tata Steel Ltd.",
-        risk: "Medium-High",
-        price: 13500,
-      },
-    ],
+    range: { min: 10001, max: 30000 },
+    categories: {
+      conservative: [
+        {
+          symbol: "DMART",
+          name: "DMART pvt. ltd.",
+          risk: "Low",
+          price: 4070,
+        },
+        {
+          symbol: "MSFT",
+          name: "Mayank Corporation",
+          risk: "Low",
+          price: 3400,
+        },
+        {
+          symbol: "JPM",
+          name: "JPMorgan Chase & Co.",
+          risk: "Low",
+          price: 9700,
+        },
+      ],
+      moderate: [
+        {
+          symbol: "TATAELXSI",
+          name: "TATA ELXSI AI",
+          risk: "Medium",
+          price: 6180,
+        },
+        {
+          symbol: "HDFCBANK",
+          name: "HDFC",
+          risk: "Medium",
+          price: 1933,
+        },
+        {
+          symbol: "NETWEB",
+          name: "NETWORK WEBWORKS",
+          risk: "Medium",
+          price: 1824,
+        },
+      ],
+      aggressive: [
+        {
+          symbol: "M&M",
+          name: "M AND M",
+          risk: "High",
+          price: 3141,
+        },
+        {
+          symbol: "LTIM",
+          name: "Larsen and turbo Mindtree",
+          risk: "High",
+          price: 5033,
+        },
+        {
+          symbol: "NVDA",
+          name: "NVIDIA Corporation",
+          risk: "Medium-High",
+          price: 6000,
+        },
+      ],
+    },
   },
   advanced: {
-    range: { min: 1000001, max: 5000000 },
-    stocks: [
-      {
-        symbol: "BAJAJFINSV",
-        name: "Bajaj Finserv Ltd.",
-        risk: "Medium-High",
-        price: 1640,
-      },
-      {
-        symbol: "TITAN",
-        name: "Titan Company Ltd.",
-        risk: "Medium-High",
-        price: 3320,
-      },
-      {
-        symbol: "ADANIENT",
-        name: "Adani Enterprises Ltd.",
-        risk: "High",
-        price: 2700,
-      },
-      {
-        symbol: "ADANIPORTS",
-        name: "Adani Ports and Special Economic Zone Ltd.",
-        risk: "High",
-        price: 1190,
-      },
-      {
-        symbol: "DIVISLAB",
-        name: "Divi's Laboratories Ltd.",
-        risk: "Medium-High",
-        price: 3750,
-      },
-      {
-        symbol: "DRREDDY",
-        name: "Dr. Reddy's Laboratories Ltd.",
-        risk: "Medium-High",
-        price: 5890,
-      },
-      {
-        symbol: "EICHERMOT",
-        name: "Eicher Motors Ltd.",
-        risk: "Medium-High",
-        price: 3870,
-      },
-      {
-        symbol: "GRASIM",
-        name: "Grasim Industries Ltd.",
-        risk: "Medium-High",
-        price: 2100,
-      },
-      { symbol: "JSWSTEEL", name: "JSW Steel Ltd.", risk: "High", price: 870 },
-      { symbol: "NTPC", name: "NTPC Ltd.", risk: "Medium", price: 315 },
-      {
-        symbol: "ONGC",
-        name: "Oil and Natural Gas Corporation Ltd.",
-        risk: "Medium-High",
-        price: 250,
-      },
-      {
-        symbol: "BRITANNIA",
-        name: "Britannia Industries Ltd.",
-        risk: "Medium",
-        price: 4780,
-      },
-    ],
+    range: { min: 30001, max: 50000 },
+    categories: {
+      conservative: [
+        {
+          symbol: "MARUTI",
+          name: "MARUTI AUTOMOBLIES",
+          risk: "LOW",
+          price: 12952,
+        },
+        {
+          symbol: "DIS",
+          name: "The DOTRIUS SUIS Company",
+          risk: "LOW",
+          price: 19570,
+        },
+        {
+          symbol: "JSM",
+          name: "JAY PHARMA",
+          risk: "Low",
+          price: 16230,
+        },
+      ],
+      moderate: [
+        {
+          symbol: "MRCYN",
+          name: "MIR CYNA PVT. LTD.",
+          risk: "Medium",
+          price: 2009,
+        },
+        {
+          symbol: "TLDR",
+          name: "TeALRA Inc.",
+          risk: "Moderate",
+          price: 14800,
+        },
+        {
+          symbol: "DIS",
+          name: "The dory Company",
+          risk: "Medium",
+          price: 1770,
+        },
+      ],
+      aggressive: [
+        {
+          symbol: "TCA",
+          name: "Tescom, Inc.",
+          risk: "High",
+          price: 14800,
+        },
+        {
+          symbol: "AMD",
+          name: "Advanced Micro Devices",
+          risk: "High",
+          price: 23750,
+        },
+        {
+          symbol: "MEERA",
+          name: "Meera Platforms Inc.",
+          risk: "High",
+          price: 29350,
+        },
+      ],
+    },
   },
   expert: {
-    range: { min: 5000001, max: Infinity },
-    stocks: [
-      {
-        symbol: "BAJAJHLDNG",
-        name: "Bajaj Holdings & Investment Ltd.",
-        risk: "Medium-High",
-        price: 7150,
-      },
-      {
-        symbol: "BOSCHLTD",
-        name: "Bosch Ltd.",
-        risk: "Medium-High",
-        price: 24380,
-      },
-      {
-        symbol: "MCDOWELL-N",
-        name: "United Spirits Ltd.",
-        risk: "Medium-High",
-        price: 1150,
-      },
-      {
-        symbol: "PGHH",
-        name: "Procter & Gamble Hygiene & Health Care Ltd.",
-        risk: "Medium",
-        price: 16950,
-      },
-      {
-        symbol: "SHREECEM",
-        name: "Shree Cement Ltd.",
-        risk: "Medium-High",
-        price: 25780,
-      },
-      {
-        symbol: "NAUKRI",
-        name: "Info Edge (India) Ltd.",
-        risk: "High",
-        price: 5840,
-      },
-      {
-        symbol: "LTI",
-        name: "LTI Mindtree Ltd.",
-        risk: "Medium-High",
-        price: 5320,
-      },
-      {
-        symbol: "PAGEIND",
-        name: "Page Industries Ltd.",
-        risk: "Medium-High",
-        price: 42560,
-      },
-      {
-        symbol: "HONAUT",
-        name: "Honeywell Automation India Ltd.",
-        risk: "Medium",
-        price: 48750,
-      },
-      { symbol: "MRF", name: "MRF Ltd.", risk: "Medium-High", price: 113000 },
-      {
-        symbol: "3MINDIA",
-        name: "3M India Ltd.",
-        risk: "Medium",
-        price: 33990,
-      },
-      {
-        symbol: "ABBOTINDIA",
-        name: "Abbott India Ltd.",
-        risk: "Medium",
-        price: 23670,
-      },
-    ],
+    range: { min: 50001, max: Infinity },
+    categories: {
+      conservative: [
+        {
+          symbol: "GLS",
+          name: "GLS Inc. Class C",
+          risk: "Low",
+          price: 44800,
+        },
+        {
+          symbol: "V",
+          name: "Visa Inc.",
+          risk: "Medium",
+          price: 32890,
+        },
+        {
+          symbol: "MA",
+          name: "Mastercard Incorporated",
+          risk: "Medium",
+          price: 38700,
+        },
+      ],
+      moderate: [
+        {
+          symbol: "ADBE",
+          name: "Adobe Inc.",
+          risk: "Medium-High",
+          price: 39500,
+        },
+        {
+          symbol: "CRM",
+          name: "Salesforce, Inc.",
+          risk: "Medium-High",
+          price: 23300,
+        },
+        {
+          symbol: "BRKB",
+          name: "Berkshire Hathaway Inc.",
+          risk: "Medium",
+          price: 34120,
+        },
+      ],
+      aggressive: [
+        {
+          symbol: "NFLX",
+          name: "Netflix, Inc.",
+          risk: "High",
+          price: 53280,
+        },
+        {
+          symbol: "ADBE",
+          name: "Adobe Inc.",
+          risk: "Medium-High",
+          price: 39500,
+        },
+        {
+          symbol: "CRM",
+          name: "Salesforce, Inc.",
+          risk: "Medium-High",
+          price: 23300,
+        },
+      ],
+    },
   },
 };
 
-/**
- * Get investment category based on amount
- * @param {number} amount - Investment amount
- * @returns {string} Investment category
- */
 function getInvestmentCategory(amount) {
   if (amount <= stockRecommendations.beginner.range.max) {
     return "beginner";
@@ -292,12 +263,6 @@ function getInvestmentCategory(amount) {
   }
 }
 
-/**
- * Calculate how many shares can be purchased
- * @param {number} investmentAmount - Total investment amount
- * @param {Array} recommendedStocks - List of recommended stocks
- * @returns {Array} Stocks with purchasable shares
- */
 function calculatePurchasableShares(investmentAmount, recommendedStocks) {
   return recommendedStocks.map((stock) => {
     const maxShares = Math.floor(investmentAmount / stock.price);
@@ -315,19 +280,29 @@ function calculatePurchasableShares(investmentAmount, recommendedStocks) {
 
 // API Routes
 
-// Stock recommendations based on investment amount
+// Stock recommendations based on investment amount and risk category
 app.post("/api/stock-recommendations", (req, res) => {
-  const { amount } = req.body;
+  const { amount, category } = req.body;
 
-  // Validate input
-  if (!amount || isNaN(amount) || amount <= 0) {
+  // Validate amount input
+  if (!amount || isNaN(amount) || amount <= 1000) {
     return res.status(400).json({
-      error: "Please provide a valid investment amount greater than 0",
+      error: "Please provide a valid investment amount greater than 1000",
     });
   }
 
-  const category = getInvestmentCategory(amount);
-  const recommendedStocks = stockRecommendations[category].stocks;
+  // Validate category input
+  const validCategories = ["conservative", "moderate", "aggressive"];
+  if (!category || !validCategories.includes(category)) {
+    return res.status(400).json({
+      error:
+        "Please provide a valid category: conservative, moderate, or aggressive",
+    });
+  }
+
+  const investmentLevel = getInvestmentCategory(amount);
+  const recommendedStocks =
+    stockRecommendations[investmentLevel].categories[category];
   const purchasableStocks = calculatePurchasableShares(
     amount,
     recommendedStocks
@@ -336,19 +311,20 @@ app.post("/api/stock-recommendations", (req, res) => {
   res.json({
     success: true,
     investmentAmount: `₹${amount.toLocaleString("en-IN")}`,
-    category,
+    investmentLevel,
+    riskCategory: category,
     recommendations: purchasableStocks.map((stock) => ({
       ...stock,
       price: `₹${stock.price.toLocaleString("en-IN")}`,
       totalInvestment: `₹${stock.totalInvestment.toLocaleString("en-IN")}`,
     })),
-    portfolioSuggestion: {
+    portfolioGuidelines: {
       conservative:
-        "Consider allocating 60% to low-risk, 30% to medium-risk, and 10% to high-risk investments",
+        "This portfolio focuses on stability with lower risk investments. Expect moderate but consistent returns.",
       moderate:
-        "Consider allocating 40% to low-risk, 40% to medium-risk, and 20% to high-risk investments",
+        "This portfolio balances growth and stability for investors seeking moderate risk and returns.",
       aggressive:
-        "Consider allocating 20% to low-risk, 40% to medium-risk, and 40% to high-risk investments",
+        "This portfolio prioritizes growth potential with higher risk investments for potentially greater returns.",
     },
   });
 });
